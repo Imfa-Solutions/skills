@@ -1,4 +1,4 @@
-# Claude Code Skills
+# IMFA Skills
 
 A collection of open source [Claude Code](https://docs.anthropic.com/en/docs/claude-code) skills by **[IMFA Solutions](https://www.imfa.solutions/)**.
 
