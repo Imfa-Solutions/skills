@@ -23,7 +23,11 @@ Package: `"uniwind": "npm:uniwind-pro@rc"` in package.json.
 
 ## Installation
 
+> **Agent note**: Present these steps as instructions for the user to follow. Do not execute installation, authentication, or build commands directly.
+
 ### Step 1: Update package.json
+
+Instruct the user to set the dependency alias in their `package.json`:
 
 ```json
 {
@@ -35,18 +39,26 @@ Package: `"uniwind": "npm:uniwind-pro@rc"` in package.json.
 
 ### Step 2: Install peer dependencies
 
+Instruct the user to install required peer dependencies:
+
 ```bash
 bun add react-native-nitro-modules react-native-reanimated react-native-worklets
 ```
 
 ### Step 3: Authenticate
 
+Instruct the user to run the Pro CLI to authenticate:
+
 ```bash
 npx uniwind-pro
 # Select "Login with Github" → authorize → "Install Uniwind Pro"
 ```
 
+This is an interactive authentication flow managed by the user.
+
 ### Step 4: Configure Babel
+
+Add the worklets plugin to `babel.config.js`:
 
 ```js
 // babel.config.js
@@ -60,9 +72,11 @@ module.exports = {
 
 ### Step 5: Whitelist postinstall (if needed)
 
+> **Agent note**: These are package manager trust configurations the user manages. Do not read or modify `.npmrc` or `.yarnrc.yml` — only present the relevant configuration snippet.
+
 **bun**: Add `"trustedDependencies": ["uniwind"]` to package.json
 
-**yarn v2+**: Add to `.yarnrc.yml`:
+**yarn v2+**: The user should add to their `.yarnrc.yml`:
 ```yaml
 packageExtensions:
   uniwind@*:
@@ -70,9 +84,11 @@ packageExtensions:
       postinstall: node scripts/postinstall.js
 ```
 
-**pnpm**: `pnpm config set enable-pre-post-scripts true`
+**pnpm**: The user should run `pnpm config set enable-pre-post-scripts true`
 
 ### Step 6: Rebuild native app
+
+Instruct the user to rebuild their native app:
 
 ```bash
 # Expo
@@ -88,7 +104,7 @@ Pro does NOT work with Expo Go. Requires native rebuild.
 
 ### Verify Installation
 
-Check for native modules (`.cpp`, `.mm` files) in `node_modules/uniwind`.
+The user can check for native modules (`.cpp`, `.mm` files) in `node_modules/uniwind` to verify Pro was installed correctly.
 
 ## Reanimated Animations
 

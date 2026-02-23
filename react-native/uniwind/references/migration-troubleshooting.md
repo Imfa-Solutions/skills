@@ -22,7 +22,11 @@
 
 ### 10-Step Migration
 
+> **Agent note**: Present these migration steps as instructions for the user to follow. Do not execute install or build commands directly.
+
 #### Step 1: Install Uniwind
+
+Instruct the user to install:
 
 ```bash
 bun add uniwind tailwindcss@^4

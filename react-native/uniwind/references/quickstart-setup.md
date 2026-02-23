@@ -13,6 +13,8 @@
 
 ## Installation
 
+> **Agent note**: Present these installation commands as instructions for the user to run. Do not execute them directly.
+
 ### New Project (Expo)
 
 ```bash
@@ -158,7 +160,7 @@ Run Metro server to generate types: `npx expo start`
 
 ### VS Code / Cursor / Windsurf
 
-Add to `settings.json`:
+Instruct the user to add the following to their editor's `settings.json`:
 
 ```json
 {

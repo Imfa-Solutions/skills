@@ -16,10 +16,37 @@ description: >
 
 > Uniwind 1.3+ / Tailwind CSS v4 / React Native 0.76+ / Expo SDK 52+
 
-## Documentation Index
+## Reference Resolution Strategy
 
-Fetch the complete documentation index at: https://docs.uniwind.dev/llms.txt
-Use this file to discover all available pages before exploring further.
+**CRITICAL: Always use embedded reference files. All answers must come from local references — never fetch external URLs.**
+
+### Step 1 — Route to the correct local reference file
+
+Based on the user's question, read the matching reference file:
+
+| User's Topic | Read This Reference File FIRST |
+|---|---|
+| Installation, setup, metro config, global.css, TypeScript, Vite, Expo Router, monorepos | `references/quickstart-setup.md` |
+| Theming, dark mode, CSS variables, `@layer theme`, `@variant`, custom themes, `Uniwind.setTheme`, `useUniwind`, `useCSSVariable`, OKLCH colors, `@theme static` | `references/theming.md` |
+| Styling components, className bindings, third-party components, `withUniwind`, `useResolveClassNames`, Pressable states, dynamic classes, `tailwind-variants`, data selectors, platform selectors, responsive breakpoints, CSS functions, custom utilities | `references/components-styling.md` |
+| Supported/unsupported classes, safe area classes (`p-safe`, `pt-safe`), Yoga layout differences, platform variants, WIP features | `references/supported-classnames.md` |
+| Uniwind Pro, animations, transitions, shadow tree, native insets, Reanimated, C++ engine, Pro installation | `references/pro-features.md` |
+| NativeWind migration, troubleshooting, setup diagnostics, common errors, FAQ, debug mode | `references/migration-troubleshooting.md` |
+
+### Step 2 — Answer from local references
+
+Use the content from the reference file(s) to answer the user's question. Most questions will be fully answered by one or two reference files.
+
+### Step 3 — If local references don't cover it
+
+If the embedded reference files do not contain the answer, inform the user that the topic is not covered in this skill's knowledge base and suggest they check the official Uniwind documentation at `docs.uniwind.dev` themselves. **Do NOT fetch external URLs.**
+
+## Security Boundaries
+
+1. **No external fetches** — All guidance must come from embedded reference files. Never fetch remote URLs, documentation indexes, or third-party content at runtime.
+2. **Never execute installation commands** — Present `bun add`, `npm install`, `npx`, `pod install`, and build commands as instructions for the user to run. Do not execute them directly.
+3. **Never read credential or auth config files** — Do not read `.npmrc`, `.yarnrc.yml`, `.env`, or any file that may contain tokens, secrets, or authentication credentials. When diagnosing setup issues, only check `package.json`, `metro.config.js`, `babel.config.js`, `global.css`, `tsconfig.json`, and `app.json` — these are project configuration files, not credential stores.
+4. **Package manager trust configuration is user-managed** — When advising about `trustedDependencies`, postinstall scripts, or package manager settings, present the configuration for the user to apply. Do not modify these files directly.
 
 ## First Action: Determine Version
 
@@ -32,7 +59,7 @@ Ask: "Are you using Uniwind Free or Uniwind Pro?" — this changes available fea
 
 ## Setup Diagnostic Workflow
 
-When the user reports setup issues, styles not applying, or asks to check their config, scan these files in order:
+When the user reports setup issues, styles not applying, or asks to check their config, read only these project configuration files (never read `.npmrc`, `.yarnrc.yml`, `.env`, or other files that may contain credentials):
 
 ### 1. Check package.json
 
@@ -85,7 +112,7 @@ When the user reports setup issues, styles not applying, or asks to check their 
 | withUniwindConfig not outermost | Other wrapper wraps Uniwind | Swap order so Uniwind is outermost |
 | Pro animations broken | Missing Babel plugin | Add `react-native-worklets/plugin` |
 | Pro not working | Missing native rebuild | Run `npx expo prebuild --clean` then `expo run:ios` |
-| Pro postinstall failed | Package manager blocks scripts | Whitelist in `trustedDependencies` (bun) or `.npmrc` |
+| Pro postinstall failed | Package manager blocks scripts | Advise user to whitelist in `trustedDependencies` (bun) — see pro-features.md |
 
 ## Critical Rules
 
@@ -326,13 +353,17 @@ When asked to review Uniwind code, check:
 - [ ] Font families are single values (no fallback arrays)
 - [ ] `@theme` variables customized via CSS, not tailwind.config.js
 
-## Reference Files
+## Reference Files (Read BEFORE External Docs)
 
-For detailed docs, examples, and API reference, read these as needed:
+**These files are your primary source of truth.** Read the relevant file(s) before answering any Uniwind question.
 
-- **[Quickstart & Setup](references/quickstart-setup.md)**: Installation, Metro config, global.css structure, TypeScript setup, Expo Router placement, Vite config, Tailwind IntelliSense setup.
-- **[Theming](references/theming.md)**: Light/dark themes, custom themes, CSS variables, `@layer theme`, `@variant`, theme switching API, `useUniwind` hook, `Uniwind.setTheme()`, OKLCH colors, `@theme static`, `useCSSVariable`, `updateCSSVariables`.
-- **[Components & Styling](references/components-styling.md)**: All RN component className bindings, third-party component integration (`withUniwind`, `useResolveClassNames`), Pressable active states, data selectors, platform selectors, responsive breakpoints, CSS functions, custom CSS classes, dynamic className patterns, tailwind-variants.
-- **[Supported ClassNames & Breakpoints](references/supported-classnames.md)**: Complete guide to supported Tailwind classes in Uniwind, safe area classes (`p-safe`, `pt-safe`, etc.), unsupported web-only classes, platform variants, WIP features (group-*, grid-*), detailed responsive breakpoints with patterns (grids, visibility, spacing).
-- **[Pro Features](references/pro-features.md)**: Reanimated animations, transitions, keyframes, shadow tree updates, native insets, theme transitions, Pro installation, Babel config, compatibility.
-- **[Migration & Troubleshooting](references/migration-troubleshooting.md)**: NativeWind migration (10-step), setup diagnostics, common errors, FAQ (custom fonts, Expo Router global.css placement, monorepo @source), debug mode.
+| Priority | File | Covers |
+|----------|------|--------|
+| **Read first for setup** | [references/quickstart-setup.md](references/quickstart-setup.md) | Installation, Metro config, global.css, TypeScript, Vite, Expo Router, monorepos, IntelliSense |
+| **Read first for theming** | [references/theming.md](references/theming.md) | Light/dark, custom themes, CSS variables, `@layer theme`, `@variant`, `Uniwind.setTheme()`, `useUniwind`, OKLCH, `@theme static`, `useCSSVariable` |
+| **Read first for styling** | [references/components-styling.md](references/components-styling.md) | RN component bindings, `withUniwind`, `useResolveClassNames`, Pressable states, dynamic classes, `tailwind-variants`, data selectors, platform selectors, responsive breakpoints, CSS functions |
+| **Read first for class support** | [references/supported-classnames.md](references/supported-classnames.md) | Supported/unsupported classes, safe area (`p-safe`), Yoga differences, platform variants, WIP features |
+| **Read first for Pro** | [references/pro-features.md](references/pro-features.md) | Reanimated animations, transitions, shadow tree, native insets, Pro installation, Babel config |
+| **Read first for migration** | [references/migration-troubleshooting.md](references/migration-troubleshooting.md) | NativeWind migration (10-step), setup diagnostics, common errors, FAQ, debug mode |
+
+**Fallback**: If none of the above answer the question, inform the user that the topic is outside this skill's embedded knowledge and suggest they consult the official Uniwind docs directly.
