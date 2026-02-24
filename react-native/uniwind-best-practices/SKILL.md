@@ -1,5 +1,5 @@
 ---
-name: uniwind
+name: uniwind-best-practices
 description: >
   Uniwind (Tailwind CSS v4 for React Native) best practices, setup, theming, styling,
   and HeroUI Native integration. Use when writing, reviewing, or fixing Uniwind code.
